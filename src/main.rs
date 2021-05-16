@@ -77,7 +77,6 @@ fn main() -> Result<(), io::Error> {
 		let mut e_list = Vec::new();
 		let i_sec = config.get(entry.as_str());
 		if i_sec.is_none() {
-			println!("{}", entry);
 			continue;
 		}
 		let sec = i_sec.unwrap().as_table().unwrap();
@@ -107,6 +106,7 @@ fn main() -> Result<(), io::Error> {
 	println!("{}{}", clear::All, termion::cursor::Hide);
 
 	'logic: loop {
+		// Get our state and widgets ready
 		let exe_count = exe[cat].len();
 		let content: &[ListItem] = &list[cat][..];
 		let list = List::new(content)
@@ -134,7 +134,6 @@ fn main() -> Result<(), io::Error> {
 			match key {
 				Key::Char('Q') |
 				Key::Ctrl('c')	=>	break 'logic,
-				// Enter keypress
 				Key::Char('\n')	|
 				Key::Char(' ')	=>	{
 					let command = exe[cat][sel].1;
@@ -145,7 +144,7 @@ fn main() -> Result<(), io::Error> {
 					.current_dir(dir)
 					.stdout(Stdio::null())
 					.spawn()?;
-				}, //execute command at [cat:sel]
+				},
 				Key::Up |
 				Key::Char('w')	=>	sel -= if sel != 0 { 1 } else { 0 },
 				Key::Down |
