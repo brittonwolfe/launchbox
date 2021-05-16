@@ -4,4 +4,4 @@ Launchbox is my first Rust application. I prefer to work from the terminal, so I
 
 ## What Launchbox Does
 
-Launchbox is a
+Launchbox is a tool launcher that runs in the command line. I previously used something like `run` from my [shell scripts](https://github.com/brittonwolfe/shell-scripts) to put together easy scripts for things like `run build`, `run last`, etc., but wanted to make a TUI application because I think they're cool.
