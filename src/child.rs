@@ -3,10 +3,12 @@ use std::{
 	process::{Command, Child, Stdio}
 };
 
+use procinfo::pid::{stat, State};
+
 pub struct Subprocess {
-	title: String,
+	pub title: String,
 	inner: Command,
-	source: String,
+	//source: String,
 	child: Option<Child>,
 	pid: Option<u32>
 }
@@ -27,7 +29,7 @@ impl Subprocess {
 		let output = Subprocess {
 			title,
 			inner: command,
-			source,
+			//source,
 			child: None,
 			pid: None
 		};
@@ -37,12 +39,25 @@ impl Subprocess {
 		let child = self.inner.spawn().unwrap();
 		self.pid = Some(child.id());
 		self.child = Some(child);
+		while !self.alive() {}
 	}
-	pub fn alive(&mut self) -> bool {
-		return false;
+	pub fn alive(&self) -> bool {
+		if self.pid.is_none() {
+			return false;
+		}
+		let pid: i32 = self.pid.unwrap() as i32;
+		let info = stat(pid).unwrap();
+		match info.state {
+			State::Dead	|
+			State::Stopped	=>	return false,
+			State::Zombie	=>	{
+				return false;
+			}
+			_				=>	return true
+		}
 	}
 	pub fn kill(self) -> () {
-		// Yeah, we're just going to ignore the result lmao
-		self.child.unwrap().kill().unwrap();
+		// We're just going to ignore the child process's dying screams
+		self.child.unwrap().kill().ok();
 	}
 }

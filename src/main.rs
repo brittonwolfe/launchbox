@@ -18,7 +18,7 @@ use tui::{
 	Terminal,
 	backend::TermionBackend,
 	layout::{Layout, Constraint, Direction},
-	style::{Modifier, Style},
+	style::{Color, Modifier, Style},
 	widgets::{Block, Borders, List, ListItem, ListState, Paragraph}
 };
 
@@ -105,10 +105,31 @@ fn main() -> Result<(), io::Error> {
 
 	println!("{}{}", clear::All, termion::cursor::Hide);
 
+	let mut subs: Vec<Subprocess> = Vec::new();
 	'logic: loop {
+		// kill all dead or zombie processes
+		// and remove them from our subs Vec
+		for n in 0..subs.len() {
+			if !subs[n].alive() {
+				subs.remove(n).kill();
+			}
+		}
+		//	Waiting to fix process tracking: currently, the
+		//	subprocesses spawn children, which means we can't
+		//	directly track their state. Not super necessary,
+		//	but would've been nice to have.
+		//let mut b_content = list[cat].clone();
+		//for n in 0..list[cat].len() {
+		//	for proc in &subs {
+		//		if proc.title.as_str() == exe[cat][n].0.as_str() {
+		//			let tmp = b_content.remove(n).style(Style::default().fg(Color::Green));
+		//			b_content.insert(n, tmp);
+		//		}
+		//	}
+		//}
 		// Get our state and widgets ready
 		let exe_count = exe[cat].len();
-		let content: &[ListItem] = &list[cat][..];
+		let content: &[ListItem] = &list[cat][..]; // switch this to b_content for process tracking
 		let list = List::new(content)
 			.block(Block::default().title(category[cat].as_str()).borders(Borders::ALL))
 			.highlight_style(Style::default().add_modifier(Modifier::BOLD))
@@ -134,11 +155,15 @@ fn main() -> Result<(), io::Error> {
 			match key {
 				Key::Char('Q') |
 				Key::Ctrl('c')	=>	break 'logic,
+				Key::Char('q') => {
+					// kill a process
+				},
 				Key::Char('\n')	|
 				Key::Char(' ')	=>	{
 					let command = exe[cat][sel];
 					let mut process = Subprocess::new(command, dir.to_str().unwrap().to_string());
 					process.start();
+					subs.push(process);
 				},
 				Key::Up |
 				Key::Char('w')	=>	sel -= if sel != 0 { 1 } else { 0 },
