@@ -1,12 +1,12 @@
 #  Launchbox
 
-Launchbox is my first Rust application. I prefer to work from the terminal, so I started launchbox to launch applications from a TUI. It's configurable, and one configuration can serve any subdirectories. 
+Launchbox is my first Rust application. I prefer to work from the terminal, so I started launchbox to launch applications from a TUI. It's configurable, and one configuration can serve any subdirectories.
 
 ## What Launchbox Does
 
 Launchbox is a tool launcher that runs in the command line. I previously used something like `run` from my [shell scripts](https://github.com/brittonwolfe/shell-scripts) to put together easy scripts for things like `run build`, `run last`, etc., but wanted to make a TUI application because I think they're cool.
 
-## Implementation
+## Roadmap
 
 Launchbox is still in its early stages, but its "core" functionality is implemented. Here's my roadmap for working on it in the future:
 
