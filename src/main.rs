@@ -117,22 +117,23 @@ fn main() -> Result<(), io::Error> {
 				subs.remove(n).kill();
 			}
 		}
-		//	Waiting to fix process tracking: currently, the
-		//	subprocesses spawn children, which means we can't
+		//	Waiting to fix process tracking: currently, some
+		//	programs redirect to other processes or create
+		//	their OWN children, which means we currently don't
 		//	directly track their state. Not super necessary,
-		//	but would've been nice to have.
-		//let mut b_content = list[cat].clone();
-		//for n in 0..list[cat].len() {
-		//	for proc in &subs {
-		//		if proc.title.as_str() == exe[cat][n].0.as_str() {
-		//			let tmp = b_content.remove(n).style(Style::default().fg(Color::Green));
-		//			b_content.insert(n, tmp);
-		//		}
-		//	}
-		//}
+		//	but would be nice to have.
+		let mut b_content = list[cat].clone();
+		for n in 0..list[cat].len() {
+			for proc in &subs {
+				if proc.title.as_str() == exe[cat][n].0.as_str() {
+					let tmp = b_content.remove(n).style(Style::default().fg(Color::Green));
+					b_content.insert(n, tmp);
+				}
+			}
+		}
 		// Get our state and widgets ready
 		let exe_count = exe[cat].len();
-		let content: &[ListItem] = &list[cat][..]; // switch this to b_content for process tracking
+		let content: &[ListItem] = &b_content[..]; // switch this to b_content for process tracking
 		let list = List::new(content)
 			.block(Block::default().title(category[cat].as_str()).borders(Borders::ALL))
 			.highlight_style(Style::default().add_modifier(Modifier::BOLD))
