@@ -83,14 +83,17 @@ fn main() -> Result<(), io::Error> {
 			let val = i_val.as_str().unwrap();
 			let tuple = (key, val);
 			let item = ListItem::new(key.as_str());
-			let a_item = ListItem::new(key.as_str());
 			e_exe.push(tuple);
 			e_list.push(item);
 			all_exe.push(tuple);
-			all_list.push(a_item);
 		}
 		exe.push(e_exe);
 		list.push(e_list);
+	}
+	all_exe.sort();
+	for item in &all_exe {
+		let item = ListItem::new(item.0.as_str());
+		all_list.push(item);
 	}
 	exe[0] = all_exe;
 	list[0] = all_list;

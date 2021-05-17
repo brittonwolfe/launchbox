@@ -12,9 +12,13 @@ Launchbox is still in its early stages, but its "core" functionality is implemen
 
 - [x] Loads a `toml` formatted configuration file
 - [x] Displays items in a list and launches them
-- [ ] Sorts items in the "all" view
+- [x] Sorts items in the "all" view
 - [ ] Shows basic information in the info pane (name and command)
 - [ ] Shows user-defined data in the info pane (install location, description, etc.)
 - [ ] Allows the user switch the Info pane to an output tab that shows stdout and stderr from spawned processes (stdin too?)
 - [ ] a global config file to load defaults from
 - [ ] Shell pane/integration so I don't have to back out of launchbox?
+
+### Smaller Features
+
+- [ ] resource checking in the info tab using `sysinfo::Process`
