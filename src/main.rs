@@ -22,8 +22,8 @@ use tui::{
 	widgets::{Block, Borders, List, ListItem, ListState, Paragraph}
 };
 
-mod data;
-use data::Subprocess;
+mod child;
+use child::Subprocess;
 
 fn main() -> Result<(), io::Error> {
 	println!("starting launchbox");
