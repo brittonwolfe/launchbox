@@ -18,7 +18,3 @@ Launchbox is still in its early stages, but its "core" functionality is implemen
 - [ ] Allows the user switch the Info pane to an output tab that shows stdout and stderr from spawned processes (stdin too?)
 - [ ] a global config file to load defaults from
 - [ ] Shell pane/integration so I don't have to back out of launchbox?
-
-### Smaller Features
-
-- [ ] resource checking in the info tab using `sysinfo::Process`
