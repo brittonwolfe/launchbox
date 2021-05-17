@@ -31,7 +31,7 @@ fn main() -> Result<(), io::Error> {
 	let mut stdin = termion::async_stdin().keys();
 
 	println!("loading configuration...");
-	// propagate up until we find a .launchbox file
+	// propagate up the fs until we find a .launchbox file
 	let i_dir = current_dir().unwrap();
 	let mut dir = i_dir.as_path();
 	let mut i_path = dir.join(".launchbox");
@@ -66,12 +66,10 @@ fn main() -> Result<(), io::Error> {
 	}
 
 	// build our command list
-	let mut exe = Vec::new();
+	let mut exe = vec![Vec::new()];
 	let mut all_exe = Vec::new();
-	let mut list = Vec::new();
+	let mut list = vec![Vec::new()];
 	let mut all_list = Vec::new();
-	exe.push(Vec::new());
-	list.push(Vec::new());
 	for entry in &category[..] {
 		let mut e_exe = Vec::new();
 		let mut e_list = Vec::new();
@@ -143,6 +141,7 @@ fn main() -> Result<(), io::Error> {
 					.args(split)
 					.current_dir(dir)
 					.stdout(Stdio::null())
+					.stderr(Stdio::null())
 					.spawn()?;
 				},
 				Key::Up |

@@ -1,7 +1,7 @@
 [launchbox]
 category = ["Build"]
 
-[build]
+[Build]
 compile = "cargo b"
 build_run = "cargo r"
 run = "./target/debug/launchbox"
