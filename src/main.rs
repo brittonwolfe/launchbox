@@ -2,8 +2,7 @@ use std::{
 	fs::read_to_string,
 	io,
 	env::{current_dir, set_current_dir},
-	path::Path,
-	process::{Command, Stdio}
+	path::Path
 };
 
 use termion::{
@@ -22,6 +21,9 @@ use tui::{
 	style::{Modifier, Style},
 	widgets::{Block, Borders, List, ListItem, ListState, Paragraph}
 };
+
+mod data;
+use data::Subprocess;
 
 fn main() -> Result<(), io::Error> {
 	println!("starting launchbox");
@@ -134,15 +136,9 @@ fn main() -> Result<(), io::Error> {
 				Key::Ctrl('c')	=>	break 'logic,
 				Key::Char('\n')	|
 				Key::Char(' ')	=>	{
-					let command = exe[cat][sel].1;
-					let mut split = command.split(" ");
-					println!("{}", termion::cursor::Show);
-					Command::new(split.next().unwrap())
-					.args(split)
-					.current_dir(dir)
-					.stdout(Stdio::null())
-					.stderr(Stdio::null())
-					.spawn()?;
+					let command = exe[cat][sel];
+					let mut process = Subprocess::new(command, dir.to_str().unwrap().to_string());
+					process.start();
 				},
 				Key::Up |
 				Key::Char('w')	=>	sel -= if sel != 0 { 1 } else { 0 },
