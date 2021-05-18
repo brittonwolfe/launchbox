@@ -107,6 +107,10 @@ fn main() -> Result<(), io::Error> {
 	// init state
 	let mut cat = 0;
 	let mut sel = 0;
+	// I want to control the offset myself, but ListState.offset
+	// isn't pub so I'm putting it off until the crate updates,
+	// or until I implement some logic to determine if the selected
+	// option is out of range and move it myself.
 	//let mut pos = 0;
 
 	println!("{}{}", clear::All, termion::cursor::Hide);
@@ -179,7 +183,12 @@ fn main() -> Result<(), io::Error> {
 				Key::Char('Q') |
 				Key::Ctrl('c')	=>	break 'logic,
 				Key::Char('q') => {
-					// get process of program we're hovering
+					let target = selection.0;
+					for n in 0..subs.len() {
+						if subs[n].title.as_str() == target.as_str() {
+							subs.remove(n).kill();
+						}
+					}
 				},
 				Key::Char('\n')	|
 				Key::Char(' ')	=>	{

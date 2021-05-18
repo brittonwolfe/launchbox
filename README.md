@@ -34,6 +34,7 @@ Launchbox is still in its early stages, but its "core" functionality is implemen
 - [x] Sorts items in the "all" view
 - [x] Shows basic information in the info pane (name and command)
 - [x] Shows user-defined data in the info pane (install location, description, etc.)
+- [ ] searchable list view
 - [ ] Scrollable info pane
 - [ ] Allows the user switch the Info pane to an output tab that shows stdout and stderr from spawned processes (stdin too?)
 - [ ] a global config file to load defaults from
