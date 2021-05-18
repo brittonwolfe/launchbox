@@ -23,11 +23,11 @@ name = [
 # info can be as many lines as you want!
 ```
 
-
-
 ## Roadmap
 
 Launchbox is still in its early stages, but its "core" functionality is implemented. Here's my roadmap for working on it in the future:
+
+### Version 0
 
 - [x] Loads a `toml` formatted configuration file
 - [x] Displays items in a list and launches them
@@ -36,6 +36,9 @@ Launchbox is still in its early stages, but its "core" functionality is implemen
 - [x] Shows user-defined data in the info pane (install location, description, etc.)
 - [ ] searchable list view
 - [ ] Scrollable info pane
+
+### Version 1
+
 - [ ] Allows the user switch the Info pane to an output tab that shows stdout and stderr from spawned processes (stdin too?)
 - [ ] a global config file to load defaults from
 - [ ] Shell pane/integration so I don't have to back out of launchbox?
