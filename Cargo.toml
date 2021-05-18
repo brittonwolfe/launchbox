@@ -1,6 +1,6 @@
 [package]
 name = "launchbox"
-version = "0.1.0"
+version = "0.5.4"
 authors = ["Britton <britton.wolfe1999@gmail.com>"]
 edition = "2018"
 

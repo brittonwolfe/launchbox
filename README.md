@@ -39,3 +39,10 @@ Launchbox is still in its early stages, but its "core" functionality is implemen
 - [ ] Allows the user switch the Info pane to an output tab that shows stdout and stderr from spawned processes (stdin too?)
 - [ ] a global config file to load defaults from
 - [ ] Shell pane/integration so I don't have to back out of launchbox?
+
+## Dependencies
+
+- [`tui`](https://crates.io/crates/tui), v0.15
+- [`termion`](https://crates.io/crates/termion), v1.5
+- [`toml`](https://crates.io/crates/toml), v0.5.8
+- [`procinfo`](https://crates.io/crates/procinfo), v0.4.2
