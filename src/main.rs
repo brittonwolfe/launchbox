@@ -142,7 +142,7 @@ fn main() -> Result<(), io::Error> {
 		let exe_count = exe[cat].len();
 		let content: &[ListItem] = &b_content[..]; // switch this to b_content for process tracking
 		let list = List::new(content)
-			.block(Block::default().title(category[cat].as_str()).borders(Borders::ALL))
+			.block(Block::default().title(format!("[{}]", category[cat])).borders(Borders::ALL))
 			.highlight_style(Style::default().add_modifier(Modifier::BOLD))
 			.highlight_symbol("> ");
 		let mut state = ListState::default();
@@ -150,7 +150,7 @@ fn main() -> Result<(), io::Error> {
 		let selection = exe[cat][sel];
 		// build info text
 		let mut text = vec![
-			Spans::from(Span::raw(format!("$ {}", selection.1).to_string()))
+			Spans::from(Span::raw(format!("$ {}", selection.1)))
 		];
 		if sec_info.contains_key(selection.0) {
 			let sel_info = sec_info[selection.0].as_array();
@@ -171,7 +171,7 @@ fn main() -> Result<(), io::Error> {
 			).split(f.size());
 			f.render_stateful_widget(list, chunks[0], &mut state);
 			let info = Paragraph::new(text)
-				.block(Block::default().title("Info").borders(Borders::ALL))
+				.block(Block::default().title("[Info]").borders(Borders::ALL))
 				.wrap(Wrap { trim: true });
 			f.render_widget(info, chunks[1]);
 		})?;
