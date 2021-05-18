@@ -48,11 +48,9 @@ impl Subprocess {
 		let pid: i32 = self.pid.unwrap() as i32;
 		let info = stat(pid).unwrap();
 		match info.state {
-			State::Dead	|
-			State::Stopped	=>	return false,
-			State::Zombie	=>	{
-				return false;
-			}
+			State::Dead |
+			State::Stopped |
+			State::Zombie	=>	return false,
 			_				=>	return true
 		}
 	}
