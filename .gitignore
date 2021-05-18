@@ -2,3 +2,4 @@
 .goto
 .launchbox
 .run
+Cargo.lock
