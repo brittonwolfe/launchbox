@@ -5,3 +5,14 @@ category = ["Build"]
 compile = "cargo b"
 build_run = "cargo r"
 run = "./target/debug/launchbox"
+
+[launchbox.info]
+compile = [
+	"Compiles the project, but doesn't run it."
+]
+build_run = [
+	"Compiles and runs the project."
+]
+run = [
+	"Runs the last compile of the project."
+]

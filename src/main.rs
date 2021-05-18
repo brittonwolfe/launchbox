@@ -19,7 +19,8 @@ use tui::{
 	backend::TermionBackend,
 	layout::{Layout, Constraint, Direction},
 	style::{Color, Modifier, Style},
-	widgets::{Block, Borders, List, ListItem, ListState, Paragraph}
+	text::{Span, Spans},
+	widgets::{Block, Borders, List, ListItem, ListState, Paragraph, Wrap}
 };
 
 mod child;
@@ -66,6 +67,8 @@ fn main() -> Result<(), io::Error> {
 	for entry in i_category {
 		category.push(entry.as_str().unwrap().to_string());
 	}
+	let i_sec_info = sec_main.get("info").unwrap();
+	let sec_info = i_sec_info.as_table().unwrap();
 
 	// build our command list
 	let mut exe = vec![Vec::new()];
@@ -140,6 +143,19 @@ fn main() -> Result<(), io::Error> {
 			.highlight_symbol("> ");
 		let mut state = ListState::default();
 		state.select(Some(sel));
+		let selection = exe[cat][sel];
+		// build info text
+		let mut text = vec![
+			Spans::from(Span::raw(format!("$ {}", selection.1).to_string()))
+		];
+		if sec_info.contains_key(selection.0) {
+			let sel_info = sec_info[selection.0].as_array();
+			for i_line in sel_info.unwrap() {
+				let line = i_line.as_str().unwrap();
+				let span = Spans::from(Span::raw(line));
+				text.push(span);
+			}
+		}
 
 		// Render content
 		terminal.draw(|f| {
@@ -150,8 +166,10 @@ fn main() -> Result<(), io::Error> {
 				].as_ref()
 			).split(f.size());
 			f.render_stateful_widget(list, chunks[0], &mut state);
-			let block = Block::default().title("Info").borders(Borders::ALL);
-			f.render_widget(block, chunks[1]);
+			let info = Paragraph::new(text)
+				.block(Block::default().title("Info").borders(Borders::ALL))
+				.wrap(Wrap { trim: true });
+			f.render_widget(info, chunks[1]);
 		})?;
 
 		// Handle input
@@ -165,8 +183,7 @@ fn main() -> Result<(), io::Error> {
 				},
 				Key::Char('\n')	|
 				Key::Char(' ')	=>	{
-					let command = exe[cat][sel];
-					let mut process = Subprocess::new(command, dir.to_str().unwrap().to_string());
+					let mut process = Subprocess::new(selection, dir.to_str().unwrap().to_string());
 					process.start();
 					subs.push(process);
 				},
