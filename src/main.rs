@@ -140,6 +140,7 @@ fn main() -> Result<(), io::Error> {
 			.highlight_symbol("> ");
 		let mut state = ListState::default();
 		state.select(Some(sel));
+
 		// Render content
 		terminal.draw(|f| {
 			let chunks = Layout::default().direction(Direction::Horizontal).margin(1).constraints(
@@ -160,7 +161,7 @@ fn main() -> Result<(), io::Error> {
 				Key::Char('Q') |
 				Key::Ctrl('c')	=>	break 'logic,
 				Key::Char('q') => {
-					// kill a process
+					// get process of program we're hovering
 				},
 				Key::Char('\n')	|
 				Key::Char(' ')	=>	{
@@ -172,7 +173,7 @@ fn main() -> Result<(), io::Error> {
 				Key::Up |
 				Key::Char('w')	=>	sel -= if sel != 0 { 1 } else { 0 },
 				Key::Down |
-				Key::Char('s')	=>	sel += if sel != exe_count { 1 } else { 0 },
+				Key::Char('s')	=>	sel += if sel != (exe_count - 1) { 1 } else { 0 },
 				Key::Left |
 				Key::Char('a')	=>	{
 					cat -= if cat != 0 { 1 } else { 0 };
