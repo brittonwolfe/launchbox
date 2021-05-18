@@ -11,8 +11,10 @@ Launchbox is a tool launcher that runs in the command line. I previously used so
 ```toml
 [launchbox]
 category = [] # your categories go here
+
 [Category] # the same as in the launchbox.category field
 name = "some command" #name is what you want to see in your menu, "some command" is what you want it to execute!
+
 [launchbox.info]
 name = [
 	"some super informative information",
