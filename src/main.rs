@@ -180,9 +180,9 @@ fn main() -> Result<(), io::Error> {
 		let input = stdin.next();
 		if let Some(Ok(key)) = input {
 			match key {
-				Key::Char('Q') |
+				Key::Char('q') |
 				Key::Ctrl('c')	=>	break 'logic,
-				Key::Char('q') => {
+				Key::Char('k') => {
 					let target = selection.0;
 					for n in 0..subs.len() {
 						if subs[n].title.as_str() == target.as_str() {
