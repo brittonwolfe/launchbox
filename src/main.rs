@@ -197,9 +197,21 @@ fn main() -> Result<(), io::Error> {
 					subs.push(process);
 				},
 				Key::Up |
-				Key::Char('w')	=>	sel -= if sel != 0 { 1 } else { 0 },
+				Key::Char('w')	=>	{
+					if sel == 0 {
+						sel = exe_count - 1;
+					} else {
+						sel -= 1;
+					}
+				},
 				Key::Down |
-				Key::Char('s')	=>	sel += if sel != (exe_count - 1) { 1 } else { 0 },
+				Key::Char('s')	=>	{
+					if sel == (exe_count - 1) {
+						sel = 0;
+					} else {
+						sel += 1;
+					}
+				},
 				Key::Left |
 				Key::Char('a')	=>	{
 					cat -= if cat != 0 { 1 } else { 0 };
