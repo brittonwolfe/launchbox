@@ -107,11 +107,8 @@ fn main() -> Result<(), io::Error> {
 	// init state
 	let mut cat = 0;
 	let mut sel = 0;
-	// I want to control the offset myself, but ListState.offset
-	// isn't pub so I'm putting it off until the crate updates,
-	// or until I implement some logic to determine if the selected
-	// option is out of range and move it myself.
-	//let mut pos = 0;
+	let mut state = ListState::default();
+	state.select(Some(sel));
 
 	println!("{}{}", clear::All, termion::cursor::Hide);
 
@@ -145,8 +142,7 @@ fn main() -> Result<(), io::Error> {
 			.block(Block::default().title(format!("[{}]", category[cat])).borders(Borders::ALL))
 			.highlight_style(Style::default().add_modifier(Modifier::BOLD))
 			.highlight_symbol("> ");
-		let mut state = ListState::default();
-		state.select(Some(sel));
+		//state.select(Some(sel));
 		let selection = exe[cat][sel];
 		// build info text
 		let mut text = vec![
@@ -179,6 +175,7 @@ fn main() -> Result<(), io::Error> {
 		// Handle input
 		let input = stdin.next();
 		if let Some(Ok(key)) = input {
+			let last = sel;
 			match key {
 				Key::Char('q') |
 				Key::Ctrl('c')	=>	break 'logic,
@@ -223,6 +220,9 @@ fn main() -> Result<(), io::Error> {
 					sel = 0;
 				},
 				_				=>	(),
+			}
+			if sel != last {
+				state.select(Some(sel));
 			}
 		}
 	}
