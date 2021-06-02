@@ -175,7 +175,8 @@ fn main() -> Result<(), io::Error> {
 		// Handle input
 		let input = stdin.next();
 		if let Some(Ok(key)) = input {
-			let last = sel;
+			let last_s = sel;
+			let last_c = cat;
 			match key {
 				Key::Char('q') |
 				Key::Ctrl('c')	=>	break 'logic,
@@ -212,16 +213,18 @@ fn main() -> Result<(), io::Error> {
 				Key::Left |
 				Key::Char('a')	=>	{
 					cat -= if cat != 0 { 1 } else { 0 };
-					sel = 0;
 				},
 				Key::Right |
 				Key::Char('d')	=>	{
 					cat += if cat != (cat_count - 1) { 1 } else { 0 };
-					sel = 0;
 				},
 				_				=>	(),
 			}
-			if sel != last {
+			if cat != last_c {
+				state = ListState::default();
+				sel = 0;
+			}
+			if cat != last_c || sel != last_s {
 				state.select(Some(sel));
 			}
 		}
