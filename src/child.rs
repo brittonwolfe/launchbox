@@ -1,6 +1,6 @@
 use std::{
 	path::Path,
-	process::{Command, Child, Stdio}
+	process::{Command, Child, ChildStdin, ChildStdout, Stdio}
 };
 
 use procinfo::pid::{stat, State};
@@ -57,5 +57,13 @@ impl Subprocess {
 	pub fn kill(self) -> () {
 		// We're just going to ignore the child process's dying screams
 		self.child.unwrap().kill().ok();
+	}
+	pub fn piped(mut self) -> (ChildStdin, ChildStdout) {
+		self.inner.stdin(Stdio::piped());
+		self.inner.stdout(Stdio::piped());
+		let child = self.child.unwrap();
+		let i = child.stdin;
+		let o = child.stdout;
+		return (i.unwrap(), o.unwrap());
 	}
 }

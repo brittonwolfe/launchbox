@@ -25,6 +25,7 @@ use tui::{
 
 mod child;
 use child::Subprocess;
+mod embed;
 
 fn main() -> Result<(), io::Error> {
 	println!("starting launchbox");
